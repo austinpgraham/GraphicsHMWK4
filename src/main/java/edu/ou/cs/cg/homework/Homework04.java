@@ -35,7 +35,7 @@ import com.jogamp.opengl.util.gl2.GLUT;
  * @author  Chris Weaver
  * @version %I%, %G%
  */
-public final class Homework02
+public final class Homework04
 	implements GLEventListener
 {
 	//**********************************************************************
@@ -66,7 +66,7 @@ public final class Homework02
 		GLProfile		profile = GLProfile.getDefault();
 		GLCapabilities	capabilities = new GLCapabilities(profile);
 		GLCanvas		canvas = new GLCanvas(capabilities);
-		JFrame			frame = new JFrame("Homework02");
+		JFrame			frame = new JFrame("Homework04");
 
 		frame.setBounds(50, 50, 600, 600);
 		frame.getContentPane().add(canvas);
@@ -79,7 +79,7 @@ public final class Homework02
 				}
 			});
 
-		canvas.addGLEventListener(new Homework02());
+		canvas.addGLEventListener(new Homework04());
 
 		FPSAnimator		animator = new FPSAnimator(canvas, 60);
 
@@ -128,37 +128,6 @@ public final class Homework02
 	private void	render(GLAutoDrawable drawable)
 	{
 		GL2		gl = drawable.getGL().getGL2();
-
-		gl.glClear(GL.GL_COLOR_BUFFER_BIT);		// Clear the buffer
-		drawSomething(gl);						// Draw something
-		drawSomeText(drawable);					// Draw some text
-	}
-
-	//**********************************************************************
-	// Private Methods (Scene)
-	//**********************************************************************
-
-	// This page is helpful (scroll down to "Drawing Lines and Polygons"):
-	// http://www.linuxfocus.org/English/January1998/article17.html
-	private void	drawSomething(GL2 gl)
-	{
-		gl.glBegin(GL.GL_POINTS);
-
-		gl.glColor3f(1.0f, 1.0f, 1.0f);
-		gl.glPointSize(2.0f);
-		gl.glVertex2d(0.0, 0.0);
-
-		gl.glEnd();
-	}
-
-	// This example on this page is long but helpful:
-	// http://jogamp.org/jogl-demos/src/demos/j2d/FlyingText.java
-	private void	drawSomeText(GLAutoDrawable drawable)
-	{
-		renderer.beginRendering(drawable.getWidth(), drawable.getHeight());
-		renderer.setColor(1.0f, 1.0f, 0, 1.0f);
-		renderer.draw("This is a point", w/2 + 8, h/2 - 5);
-		renderer.endRendering();
 	}
 }
 

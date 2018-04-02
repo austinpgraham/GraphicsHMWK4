@@ -101,19 +101,19 @@ def altJvmArgs = ['-Xms128m', '-Xmx768m', '-noclassgc',\
  '-Dapple.awt.antialiasing=on', '-Dapple.awt.graphics.UseQuartz=true', ]
 
 // Create scripts for alternate entry points (main() methods)
-createScript(project, 'edu.ou.cs.cg.example.Gasket', 'gasket', altJvmArgs)
-createScript(project, 'edu.ou.cs.cg.example.Lorenz', 'lorenz', altJvmArgs)
-createScript(project, 'edu.ou.cs.cg.example.Template', 'template', altJvmArgs)
-createScript(project, 'edu.ou.cs.cg.example.Viewport', 'viewport', altJvmArgs)
-createScript(project, 'edu.ou.cs.cg.homework.Homework02Chris', 'hw02-chris', altJvmArgs)
-createScript(project, 'edu.ou.cs.cg.interaction.Application', 'interaction', altJvmArgs)
+//createScript(project, 'edu.ou.cs.cg.example.Gasket', 'gasket', altJvmArgs)
+//createScript(project, 'edu.ou.cs.cg.example.Lorenz', 'lorenz', altJvmArgs)
+//createScript(project, 'edu.ou.cs.cg.example.Template', 'template', altJvmArgs)
+//createScript(project, 'edu.ou.cs.cg.example.Viewport', 'viewport', altJvmArgs)
+//createScript(project, 'edu.ou.cs.cg.homework.Homework02Chris', 'hw02-chris', altJvmArgs)
+//createScript(project, 'edu.ou.cs.cg.interaction.Application', 'interaction', altJvmArgs)
 
 // You'll need to add more of these for future assignments. For each one, put
 // the fully qualified classname of the class with main() in the second argument
 // and the desired program name in the third argument.
-createScript(project, 'edu.ou.cs.cg.homework.Homework02', 'hw02', altJvmArgs)
+//createScript(project, 'edu.ou.cs.cg.homework.Homework02', 'hw02', altJvmArgs)
 //createScript(project, 'edu.ou.cs.cg.homework.Homework03', 'hw03', altJvmArgs)
-//createScript(project, 'edu.ou.cs.cg.homework.Homework04', 'hw04', altJvmArgs)
+createScript(project, 'edu.ou.cs.cg.homework.Homework04', 'hw04', altJvmArgs)
 //createScript(project, 'edu.ou.cs.cg.homework.Homework05', 'hw05', altJvmArgs)
 
 //******************************************************************************
