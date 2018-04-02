@@ -50,11 +50,11 @@ public final class Homework04
 	//**********************************************************************
 
 	// State (internal) variables
-	private int				k = 0;		// Just an animation counter
-
 	private int				w;			// Canvas width
 	private int				h;			// Canvas height
 	private TextRenderer	renderer;
+
+	Point centralPoint = new Point(0,0);
 
 	//**********************************************************************
 	// Main
@@ -121,12 +121,14 @@ public final class Homework04
 
 	private void	update()
 	{
-		k++;									// Counters are useful, right?
+		centralPoint.update();
 	}
 
 	private void	render(GLAutoDrawable drawable)
 	{
 		GL2		gl = drawable.getGL().getGL2();
+
+		centralPoint.draw(gl);
 	}
 }
 

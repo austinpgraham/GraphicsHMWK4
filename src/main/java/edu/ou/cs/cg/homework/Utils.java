@@ -24,6 +24,14 @@ public class Utils
 		gl.glEnd();
 	}
 
+	public static void drawPoint(GL2 gl, Point p)
+	{
+		gl.glBegin(GL.GL_POINTS);
+		gl.glColor3f(1.0f, 1.0f, 1.0f);
+		gl.glVertex2f(p.getFloatX(), p.getFloatY());
+		gl.glEnd();
+	}
+
 	/*
 	 * Draw a triangle given three vertices and a fill color
 	 */
