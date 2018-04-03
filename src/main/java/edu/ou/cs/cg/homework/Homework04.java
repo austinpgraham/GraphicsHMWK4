@@ -54,7 +54,7 @@ public final class Homework04
 	private int				h;			// Canvas height
 	private TextRenderer	renderer;
 
-	Point centralPoint = new Point(0,0);
+	static Point centralPoint = new Point(0,0);
 
 	//**********************************************************************
 	// Main
@@ -79,6 +79,9 @@ public final class Homework04
 			});
 
 		canvas.addGLEventListener(new Homework04());
+
+		EventKeyListener keyList = new EventKeyListener(centralPoint);
+		canvas.addKeyListener(keyList);
 
 		FPSAnimator		animator = new FPSAnimator(canvas, 60);
 
@@ -128,6 +131,7 @@ public final class Homework04
 	{
 		GL2		gl = drawable.getGL().getGL2();
 
+		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 		centralPoint.draw(gl);
 	}
 }
