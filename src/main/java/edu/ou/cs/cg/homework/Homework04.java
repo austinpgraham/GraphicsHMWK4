@@ -55,6 +55,7 @@ public final class Homework04
 	private TextRenderer	renderer;
 
 	static Point centralPoint = new Point(0,0);
+	private Polygon outline;
 
 	//**********************************************************************
 	// Main
@@ -96,6 +97,13 @@ public final class Homework04
 	{
 		w = drawable.getWidth();
 		h = drawable.getHeight();
+		final float BOX_WIDTH = .8f * 2f;
+		final float BOX_HEIGHT = .8f*2f;
+		Point corner = new Point(-1.0f + (.1f*2f), 1.0f - (.1f*2f));
+		Point bottomLeft = new Point(corner.getFloatX(), corner.getFloatY() - BOX_HEIGHT);
+		Point bottomRight = new Point(corner.getFloatX() + BOX_WIDTH, corner.getFloatY() - BOX_HEIGHT);
+		Point topRight = new Point(corner.getFloatX() + BOX_WIDTH, corner.getFloatY());
+		this.outline = new Polygon(corner, bottomLeft, bottomRight, topRight);
 
 		renderer = new TextRenderer(new Font("Serif", Font.PLAIN, 18),
 									true, true);
@@ -133,6 +141,7 @@ public final class Homework04
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 		centralPoint.draw(gl);
+		this.outline.draw(gl);
 	}
 }
 

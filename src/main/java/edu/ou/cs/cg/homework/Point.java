@@ -7,16 +7,24 @@
  */
 package edu.ou.cs.cg.homework;
 
+import java.util.Random;
+
 import java.awt.geom.Point2D;
 import javax.media.opengl.*;
 
 public class Point extends Point2D.Float
 {
-    Vector velocity = new Vector(0.001f, 0.001f);
+    private Random rand = new Random();
+    private Vector velocity;
+    private final float TARGET_MAG = 0.01667f;
 
     public Point(float x, float y)
     {
         super(x, y);
+        float xVel = (float)(rand.nextDouble()*2.0 - 1.0) * this.TARGET_MAG;
+        float yVel = (float)Math.sqrt(Math.pow(this.TARGET_MAG, 2) - Math.pow(xVel, 2));
+        yVel = (this.rand.nextInt(2) == 0) ? -yVel : yVel;
+        this.velocity = new Vector(xVel, yVel);
     }
 
     public float getFloatY()
@@ -53,5 +61,12 @@ public class Point extends Point2D.Float
     {
         this.setFloatX(this.x + this.velocity.x);
         this.setFloatY(this.y + this.velocity.y);
+    }
+
+    public static Vector subtract(Point one, Point two)
+    {
+        float x = two.getFloatX() - one.getFloatX();
+        float y = two.getFloatY() - one.getFloatY();
+        return new Vector(x, y);
     }
 }
