@@ -133,6 +133,15 @@ public final class Homework04
 	private void	update()
 	{
 		centralPoint.update();
+		Vector vel_vec = centralPoint.getPointVector();
+		Vector col_vec = this.outline.collision(vel_vec);
+		if(col_vec != null)
+		{
+			Vector normal = col_vec.getNormal();
+			Vector reflected = vel_vec.reflected(normal);
+			centralPoint.setVelocity(reflected);
+		}
+		
 	}
 
 	private void	render(GLAutoDrawable drawable)

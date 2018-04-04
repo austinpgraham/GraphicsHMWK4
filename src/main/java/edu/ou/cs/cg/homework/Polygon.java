@@ -1,6 +1,7 @@
 
 package edu.ou.cs.cg.homework;
 
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import javax.media.opengl.*;
 
@@ -26,5 +27,24 @@ class Polygon
         {
             Utils.drawLine(gl, v.getStartPoint(), v.getEndPoint(), color);
         }
+    }
+
+    public Vector collision(Vector v)
+    {
+        for(Vector in_v: this.sides)
+        {
+            if(Line2D.linesIntersect(in_v.getStartPoint().getX(), 
+                                     in_v.getStartPoint().getY(), 
+                                     in_v.getEndPoint().getX(), 
+                                     in_v.getEndPoint().getY(), 
+                                     v.getStartPoint().getX(), 
+                                     v.getStartPoint().getY(), 
+                                     v.getEndPoint().getX(), 
+                                     v.getEndPoint().getY()))
+                                     {
+                                         return in_v;
+                                     }
+        }
+        return null;
     }
 }

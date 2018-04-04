@@ -47,6 +47,11 @@ public class Point extends Point2D.Float
         this.y = y;
     }
 
+    public void setVelocity(Vector v)
+    {
+        this.velocity = v;
+    }
+
     public void alterVelocity(float amount)
     {
         this.velocity.increaseMagnitude(amount);
@@ -61,6 +66,13 @@ public class Point extends Point2D.Float
     {
         this.setFloatX(this.x + this.velocity.x);
         this.setFloatY(this.y + this.velocity.y);
+    }
+
+    public Vector getPointVector()
+    {
+        Point endPoint = new Point(this.x + this.velocity.x, this.y + this.velocity.y);
+        Vector vel_vec = new Vector(this, endPoint);
+        return vel_vec;
     }
 
     public static Vector subtract(Point one, Point two)

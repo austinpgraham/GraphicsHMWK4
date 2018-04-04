@@ -66,4 +66,33 @@ class Vector
     {
         return this.end;
     }
+
+    public Vector reflected(Vector normal)
+    {
+        float _dot = Vector.dot(this, normal);
+        Vector scaledNormal = Vector.scale(normal, _dot*2);
+        return Vector.subtract(this, scaledNormal);
+    }
+
+    public Vector getNormal()
+    {
+        return new Vector(-this.y / this.magnitude, this.x / this.magnitude);
+    }
+
+    public static float dot(Vector v1, Vector v2)
+    {
+        return (v1.x*v2.x) + (v1.y*v2.y);
+    }
+    
+    public static Vector subtract(Vector v1, Vector v2)
+    {
+        float x = v1.x - v2.x;
+        float y = v1.y - v2.y;
+        return new Vector(x, y);
+    }
+
+    public static Vector scale(Vector v, float amount)
+    {
+        return new Vector(v.x*amount, v.y*amount);
+    }
 }
