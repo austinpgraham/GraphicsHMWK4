@@ -8,9 +8,11 @@ import javax.media.opengl.*;
 class Polygon
 {
     private ArrayList<Vector> sides;
+    public Point center;
 
-    public Polygon(Point... points)
+    public Polygon(Point center, Point... points)
     {
+        this.center = center;
         this.sides = new ArrayList<Vector>();
         for(int i = 0; i < points.length - 1; i++)
         {

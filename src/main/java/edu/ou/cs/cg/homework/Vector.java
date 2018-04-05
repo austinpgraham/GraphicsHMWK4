@@ -3,10 +3,10 @@ package edu.ou.cs.cg.homework;
 
 class Vector
 {
-    float magnitude;
     public float x;
     public float y;
 
+    private float magnitude;
     private Point start;
     private Point end;
 

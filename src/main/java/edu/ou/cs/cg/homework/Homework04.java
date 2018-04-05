@@ -16,7 +16,6 @@ package edu.ou.cs.cg.homework;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.*;
 import java.util.Random;
 import javax.swing.*;
 import javax.media.opengl.*;
@@ -54,8 +53,8 @@ public final class Homework04
 	private int				h;			// Canvas height
 	private TextRenderer	renderer;
 
-	static Point centralPoint = new Point(0,0);
-	private Polygon outline;
+	static Point centralPoint;
+	static PolygonCollection collection;
 
 	//**********************************************************************
 	// Main
@@ -81,7 +80,14 @@ public final class Homework04
 
 		canvas.addGLEventListener(new Homework04());
 
-		EventKeyListener keyList = new EventKeyListener(centralPoint);
+		collection = new PolygonCollection();
+		collection.addPolygon(Homework04.getShape(4, new Point(-0.5f, 0.0f)));
+		collection.addPolygon(Homework04.getShape(6, new Point(0f,0.5f)));
+		collection.addPolygon(Homework04.getShape(32, new Point(0f, -0.5f)));
+		Polygon focusedPolygon = collection.getFocusedPolygon();
+		centralPoint = new Point(focusedPolygon.center.x, focusedPolygon.center.y);
+
+		EventKeyListener keyList = new EventKeyListener(centralPoint, collection);
 		canvas.addKeyListener(keyList);
 
 		FPSAnimator		animator = new FPSAnimator(canvas, 60);
@@ -97,14 +103,7 @@ public final class Homework04
 	{
 		w = drawable.getWidth();
 		h = drawable.getHeight();
-		final float BOX_WIDTH = .8f * 2f;
-		final float BOX_HEIGHT = .8f*2f;
-		Point corner = new Point(-1.0f + (.1f*2f), 1.0f - (.1f*2f));
-		Point bottomLeft = new Point(corner.getFloatX(), corner.getFloatY() - BOX_HEIGHT);
-		Point bottomRight = new Point(corner.getFloatX() + BOX_WIDTH, corner.getFloatY() - BOX_HEIGHT);
-		Point topRight = new Point(corner.getFloatX() + BOX_WIDTH, corner.getFloatY());
-		this.outline = new Polygon(corner, bottomLeft, bottomRight, topRight);
-
+		
 		renderer = new TextRenderer(new Font("Serif", Font.PLAIN, 18),
 									true, true);
 	}
@@ -134,7 +133,7 @@ public final class Homework04
 	{
 		centralPoint.update();
 		Vector vel_vec = centralPoint.getPointVector();
-		Vector col_vec = this.outline.collision(vel_vec);
+		Vector col_vec = collection.getFocusedPolygon().collision(vel_vec);
 		if(col_vec != null)
 		{
 			Vector normal = col_vec.getNormal();
@@ -150,7 +149,28 @@ public final class Homework04
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 		centralPoint.draw(gl);
-		this.outline.draw(gl);
+		for(Polygon p: collection.getPolygons())
+		{
+			p.draw(gl);
+		}
+	}
+
+	public static Polygon getShape(int numPoints, Point center)
+	{
+		final float FULL_CIRC = 360f;
+		final float RADIUS = 0.4f;
+		float skipDegree = FULL_CIRC / numPoints;
+		Point[] points = new Point[numPoints];
+		int count = 0;
+		for(float i = 0; i < FULL_CIRC; i+= skipDegree)
+		{
+			double x =  center.getFloatX() + Math.cos(Math.toRadians(i))*RADIUS;
+			double y = center.getFloatY() + Math.sin(Math.toRadians(i))*RADIUS;
+			Point p = new Point((float)x, (float)y);
+			points[count] = p;
+			count ++;
+		}
+		return new Polygon(center, points);
 	}
 }
 
