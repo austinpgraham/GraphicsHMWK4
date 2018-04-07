@@ -37,6 +37,8 @@ class EventKeyListener implements KeyListener {
                 ctrlPoint.reset(this.polygons.getFocusedPolygon().center);
                 break;
             case KeyEvent.VK_4:
+                this.polygons.setFocused(3);
+                ctrlPoint.reset(this.polygons.getFocusedPolygon().center);
                 break;
         }
     }

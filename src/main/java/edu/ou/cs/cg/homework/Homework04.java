@@ -87,6 +87,7 @@ public final class Homework04
 		collection.addPolygon(Homework04.getShape(4, new Point(0.0f, 0.0f), radius, 45f));
 		collection.addPolygon(Homework04.getShape(6, new Point(0.0f,0.0f), radius, 0f));
 		collection.addPolygon(Homework04.getShape(32, new Point(0.0f, 0.0f), radius, 0f));
+		collection.addPolygon(Homework04.getDistortedShape(10, new Point(0.0f, 0.0f), radius, 90f));
 		Polygon focusedPolygon = collection.getFocusedPolygon();
 		centralPoint = new Point(focusedPolygon.center.x, focusedPolygon.center.y);
 
@@ -167,6 +168,38 @@ public final class Homework04
 			double y = center.getFloatY() + Math.sin(Math.toRadians(i))*RADIUS;
 			Point p = new Point((float)x, (float)y);
 			points[count] = p;
+			count ++;
+		}
+		return new Polygon(center, points);
+	}
+
+	public static Polygon getDistortedShape(int numPoints, Point center, float radius, float startAngle)
+	{
+		final float FULL_CIRC = 360f;
+		float RADIUS = radius - 0.1f;
+		float skipDegree = FULL_CIRC / numPoints;
+		Point[] points = new Point[numPoints];
+		int count = 0;
+		float offset = 0.0f;
+		for(float i = startAngle; i < FULL_CIRC + startAngle; i+= skipDegree)
+		{
+			double x =  center.getFloatX() + offset + Math.cos(Math.toRadians(i))*RADIUS;
+			double y = center.getFloatY() + offset +  Math.sin(Math.toRadians(i))*RADIUS;
+			Point p = new Point((float)x, (float)y);
+			points[count] = p;
+			switch(count)
+			{
+				case 1:
+					RADIUS += 0.1f;
+					offset = 0.04f;
+					break;
+				case 6:
+					RADIUS += 0.04f;
+					break;
+				case 8:
+					RADIUS -= 0.14f;
+					break;
+			}
 			count ++;
 		}
 		return new Polygon(center, points);
