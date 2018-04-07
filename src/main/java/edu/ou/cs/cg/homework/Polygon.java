@@ -140,7 +140,7 @@ class Polygon
         return null;
     }
 
-    private Point[] generatePoints(int numPoints, Point center, float radius, float startAngle)
+    protected Point[] generatePoints(int numPoints, Point center, float radius, float startAngle)
     {
         final float FULL_CIRC = 360f;
 		final float RADIUS = radius;

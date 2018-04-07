@@ -89,10 +89,10 @@ public final class Homework04
 		bouncers.addPolygon(new Polygon(4, new Point(0.0f, 0.0f), pointerRadius, 45f));
 		bouncers.addPolygon(new Polygon(8, new Point(0.0f, 0.0f), pointerRadius, 0f));
 		bouncers.addPolygon(new Polygon(5, new Point(0.0f, 0.0f), pointerRadius, 0f));
-		collection.addPolygon(new Polygon(4, new Point(0.0f, 0.0f), radius, 45f));
+		collection.addPolygon(new Polygon(4, new Point(0.0f, 0.0f), radius + 0.3f, 45f));
 		collection.addPolygon(new Polygon(6, new Point(0.0f,0.0f), radius, 0f));
 		collection.addPolygon(new Polygon(32, new Point(0.0f, 0.0f), radius, 0f));
-		collection.addPolygon(new Polygon(10, new Point(0.0f, 0.0f), radius, 90f));
+		collection.addPolygon(new DistortedContainerPolygon(10, new Point(0.0f, 0.0f), radius - 0.1f, 54f));
 
 		EventKeyListener keyList = new EventKeyListener(collection, bouncers);
 		canvas.addKeyListener(keyList);
