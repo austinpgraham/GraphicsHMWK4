@@ -112,6 +112,11 @@ class Polygon
         this.sides = this.updateVectors();
     }
 
+    public float getStartAngle()
+    {
+        return this.startAngle;
+    }
+
     public Vector collision(Vector v)
     {
         for(Vector in_v: this.sides)

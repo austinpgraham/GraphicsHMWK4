@@ -31,4 +31,9 @@ class PolygonCollection
     {
         return this.polygons;
     }
+
+    public int getFocused()
+    {
+        return this.focused;
+    }
 }

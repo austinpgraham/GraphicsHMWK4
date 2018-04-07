@@ -14,6 +14,7 @@
 
 package edu.ou.cs.cg.homework;
 
+import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
@@ -56,6 +57,8 @@ public final class Homework04
 	static PolygonCollection collection;
 	static PolygonCollection bouncers;
 
+	static ArrayList<PolygonCollection> pointers;
+
 	//**********************************************************************
 	// Main
 	//**********************************************************************
@@ -95,8 +98,14 @@ public final class Homework04
 		collection.addPolygon(new Polygon(32, new Point(0.0f, 0.0f), radius, 0f));
 		collection.addPolygon(new DistortedContainerPolygon(10, new Point(0.0f, 0.0f), radius - 0.1f, 54f));
 
-		EventKeyListener keyList = new EventKeyListener(collection, bouncers);
+		pointers = new ArrayList<PolygonCollection>();
+		pointers.add(bouncers);
+
+		EventKeyListener keyList = new EventKeyListener(collection, pointers);
 		canvas.addKeyListener(keyList);
+
+		EventMouseListener mouseList = new EventMouseListener(pointers);
+		canvas.addMouseListener(mouseList);
 
 		FPSAnimator		animator = new FPSAnimator(canvas, 60);
 
@@ -139,15 +148,18 @@ public final class Homework04
 
 	private void	update()
 	{
-		Polygon pointer = bouncers.getFocusedPolygon();
-		pointer.update();
-		Vector col_vec = collection.getFocusedPolygon().collision(pointer);
-		Vector vel_vec = pointer.center.getPointVector();
-		if(col_vec != null)
+		for(PolygonCollection pc: pointers)
 		{
-			Vector normal = col_vec.getNormal();
-			Vector reflected = vel_vec.reflected(normal);
-			pointer.setVelocity(reflected);
+			Polygon pointer = pc.getFocusedPolygon();
+			pointer.update();
+			Vector col_vec = collection.getFocusedPolygon().collision(pointer);
+			Vector vel_vec = pointer.center.getPointVector();
+			if(col_vec != null)
+			{
+				Vector normal = col_vec.getNormal();
+				Vector reflected = vel_vec.reflected(normal);
+				pointer.setVelocity(reflected);
+			}
 		}
 	}
 
@@ -156,7 +168,10 @@ public final class Homework04
 		GL2		gl = drawable.getGL().getGL2();
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
-		bouncers.getFocusedPolygon().draw(gl);
+		for(PolygonCollection pc: pointers)
+		{
+			pc.getFocusedPolygon().draw(gl);
+		}
 		collection.getFocusedPolygon().draw(gl);
 	}
 }
