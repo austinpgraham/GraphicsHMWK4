@@ -86,6 +86,7 @@ public final class Homework04
 
 		collection = new PolygonCollection();
 		bouncers = new PolygonCollection();
+		bouncers.addPolygon(new Polygon(new Point(0.0f, 0.0f), pointerRadius));
 		bouncers.addPolygon(new Polygon(4, new Point(0.0f, 0.0f), pointerRadius, 45f));
 		bouncers.addPolygon(new Polygon(8, new Point(0.0f, 0.0f), pointerRadius, 0f));
 		bouncers.addPolygon(new Polygon(5, new Point(0.0f, 0.0f), pointerRadius, 0f));

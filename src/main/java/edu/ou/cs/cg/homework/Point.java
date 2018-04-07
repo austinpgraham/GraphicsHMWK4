@@ -70,7 +70,7 @@ public class Point extends Point2D.Float
 
     public void draw(GL2 gl)
     {
-        Utils.drawPoint(gl, this);
+        Utils.drawPoint(gl, this, new float[]{1.0f, 1.0f, 1.0f});
     }
 
     public void update()

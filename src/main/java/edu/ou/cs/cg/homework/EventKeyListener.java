@@ -62,6 +62,11 @@ class EventKeyListener implements KeyListener {
                 this.bouncers.setFocused(2);
                 this.bouncers.getFocusedPolygon().copyState(old);
                 break;
+            case KeyEvent.VK_9:
+                old = this.bouncers.getFocusedPolygon();
+                this.bouncers.setFocused(3);
+                this.bouncers.getFocusedPolygon().copyState(old);
+                break;
         }
     }
 

@@ -24,10 +24,10 @@ public class Utils
 		gl.glEnd();
 	}
 
-	public static void drawPoint(GL2 gl, Point p)
+	public static void drawPoint(GL2 gl, Point p, float[] color)
 	{
 		gl.glBegin(GL.GL_POINTS);
-		gl.glColor3f(1.0f, 1.0f, 1.0f);
+		gl.glColor3f(color[0], color[1], color[2]);
 		gl.glVertex2f(p.getFloatX(), p.getFloatY());
 		gl.glEnd();
 	}

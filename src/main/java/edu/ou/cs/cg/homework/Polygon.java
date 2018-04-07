@@ -26,6 +26,14 @@ class Polygon
         }
     }
 
+    public Polygon(Point center, float startRadius)
+    {
+        this.center = center;
+        this.radius = startRadius;
+        this.points = new Point[]{ this.center };
+        this.sides = this.updateVectors();
+    }
+
     private ArrayList<Vector> updateVectors()
     {
         ArrayList<Vector> _s = new ArrayList<Vector>();
@@ -41,9 +49,16 @@ class Polygon
     public void draw(GL2 gl)
     {
         float[] color = {1.0f, 1.0f, 1.0f};
-        for(Vector v: this.sides)
+        if(this.sides.size() <= 1)
         {
-            Utils.drawLine(gl, v.getStartPoint(), v.getEndPoint(), color);
+            this.center.draw(gl);
+        }
+        else 
+        {
+            for(Vector v: this.sides)
+            {
+                Utils.drawLine(gl, v.getStartPoint(), v.getEndPoint(), color);
+            }
         }
     }
 
@@ -87,9 +102,12 @@ class Polygon
     public void update()
     {
         this.center.update();
-        for(Point p: this.points)
+        if(this.points.length > 1)
         {
-            p.update();
+            for(Point p: this.points)
+            {
+                p.update();
+            }
         }
         this.sides = this.updateVectors();
     }
@@ -120,6 +138,10 @@ class Polygon
 
     public Vector collision(Polygon p)
     {
+        if(p.getSides().size() <= 1)
+        {
+            return this.collision(p.center.getPointVector());
+        }
         for(Vector in_v: this.sides)
         {
             for(Vector v: p.getSides())
@@ -142,6 +164,10 @@ class Polygon
 
     protected Point[] generatePoints(int numPoints, Point center, float radius, float startAngle)
     {
+        if(numPoints == 1)
+        {
+            return new Point[]{ center };
+        }
         final float FULL_CIRC = 360f;
 		final float RADIUS = radius;
 		float skipDegree = FULL_CIRC / numPoints;
