@@ -49,8 +49,8 @@ public final class Homework04
 	//**********************************************************************
 
 	// State (internal) variables
-	private int				w;			// Canvas width
-	private int				h;			// Canvas height
+	public int				w;			// Canvas width
+	public int				h;			// Canvas height
 	private TextRenderer	renderer;
 
 	static Point centralPoint;
@@ -78,12 +78,15 @@ public final class Homework04
 				}
 			});
 
-		canvas.addGLEventListener(new Homework04());
+		Homework04 root = new Homework04();
+		canvas.addGLEventListener(root);
+
+		float radius =1.0f;
 
 		collection = new PolygonCollection();
-		collection.addPolygon(Homework04.getShape(4, new Point(-0.5f, 0.0f)));
-		collection.addPolygon(Homework04.getShape(6, new Point(0f,0.5f)));
-		collection.addPolygon(Homework04.getShape(32, new Point(0f, -0.5f)));
+		collection.addPolygon(Homework04.getShape(4, new Point(0.0f, 0.0f), radius, 45f));
+		collection.addPolygon(Homework04.getShape(6, new Point(0.0f,0.0f), radius, 0f));
+		collection.addPolygon(Homework04.getShape(32, new Point(0.0f, 0.0f), radius, 0f));
 		Polygon focusedPolygon = collection.getFocusedPolygon();
 		centralPoint = new Point(focusedPolygon.center.x, focusedPolygon.center.y);
 
@@ -140,7 +143,6 @@ public final class Homework04
 			Vector reflected = vel_vec.reflected(normal);
 			centralPoint.setVelocity(reflected);
 		}
-		
 	}
 
 	private void	render(GLAutoDrawable drawable)
@@ -149,20 +151,17 @@ public final class Homework04
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 		centralPoint.draw(gl);
-		for(Polygon p: collection.getPolygons())
-		{
-			p.draw(gl);
-		}
+		collection.getFocusedPolygon().draw(gl);
 	}
 
-	public static Polygon getShape(int numPoints, Point center)
+	public static Polygon getShape(int numPoints, Point center, float radius, float startAngle)
 	{
 		final float FULL_CIRC = 360f;
-		final float RADIUS = 0.4f;
+		final float RADIUS = radius;
 		float skipDegree = FULL_CIRC / numPoints;
 		Point[] points = new Point[numPoints];
 		int count = 0;
-		for(float i = 0; i < FULL_CIRC; i+= skipDegree)
+		for(float i = startAngle; i < FULL_CIRC + startAngle; i+= skipDegree)
 		{
 			double x =  center.getFloatX() + Math.cos(Math.toRadians(i))*RADIUS;
 			double y = center.getFloatY() + Math.sin(Math.toRadians(i))*RADIUS;
