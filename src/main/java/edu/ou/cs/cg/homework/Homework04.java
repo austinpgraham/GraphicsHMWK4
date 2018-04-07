@@ -53,8 +53,8 @@ public final class Homework04
 	public int				h;			// Canvas height
 	private TextRenderer	renderer;
 
-	static Point centralPoint;
 	static PolygonCollection collection;
+	static PolygonCollection bouncers;
 
 	//**********************************************************************
 	// Main
@@ -82,16 +82,19 @@ public final class Homework04
 		canvas.addGLEventListener(root);
 
 		float radius =1.0f;
+		float pointerRadius = 0.08f;
 
 		collection = new PolygonCollection();
-		collection.addPolygon(Homework04.getShape(4, new Point(0.0f, 0.0f), radius, 45f));
-		collection.addPolygon(Homework04.getShape(6, new Point(0.0f,0.0f), radius, 0f));
-		collection.addPolygon(Homework04.getShape(32, new Point(0.0f, 0.0f), radius, 0f));
-		collection.addPolygon(Homework04.getDistortedShape(10, new Point(0.0f, 0.0f), radius, 90f));
-		Polygon focusedPolygon = collection.getFocusedPolygon();
-		centralPoint = new Point(focusedPolygon.center.x, focusedPolygon.center.y);
+		bouncers = new PolygonCollection();
+		bouncers.addPolygon(new Polygon(4, new Point(0.0f, 0.0f), pointerRadius, 45f));
+		bouncers.addPolygon(new Polygon(8, new Point(0.0f, 0.0f), pointerRadius, 0f));
+		bouncers.addPolygon(new Polygon(5, new Point(0.0f, 0.0f), pointerRadius, 0f));
+		collection.addPolygon(new Polygon(4, new Point(0.0f, 0.0f), radius, 45f));
+		collection.addPolygon(new Polygon(6, new Point(0.0f,0.0f), radius, 0f));
+		collection.addPolygon(new Polygon(32, new Point(0.0f, 0.0f), radius, 0f));
+		collection.addPolygon(new Polygon(10, new Point(0.0f, 0.0f), radius, 90f));
 
-		EventKeyListener keyList = new EventKeyListener(centralPoint, collection);
+		EventKeyListener keyList = new EventKeyListener(collection, bouncers);
 		canvas.addKeyListener(keyList);
 
 		FPSAnimator		animator = new FPSAnimator(canvas, 60);
@@ -135,14 +138,15 @@ public final class Homework04
 
 	private void	update()
 	{
-		centralPoint.update();
-		Vector vel_vec = centralPoint.getPointVector();
-		Vector col_vec = collection.getFocusedPolygon().collision(vel_vec);
+		Polygon pointer = bouncers.getFocusedPolygon();
+		pointer.update();
+		Vector col_vec = collection.getFocusedPolygon().collision(pointer);
+		Vector vel_vec = pointer.center.getPointVector();
 		if(col_vec != null)
 		{
 			Vector normal = col_vec.getNormal();
 			Vector reflected = vel_vec.reflected(normal);
-			centralPoint.setVelocity(reflected);
+			pointer.setVelocity(reflected);
 		}
 	}
 
@@ -151,58 +155,8 @@ public final class Homework04
 		GL2		gl = drawable.getGL().getGL2();
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
-		centralPoint.draw(gl);
+		bouncers.getFocusedPolygon().draw(gl);
 		collection.getFocusedPolygon().draw(gl);
-	}
-
-	public static Polygon getShape(int numPoints, Point center, float radius, float startAngle)
-	{
-		final float FULL_CIRC = 360f;
-		final float RADIUS = radius;
-		float skipDegree = FULL_CIRC / numPoints;
-		Point[] points = new Point[numPoints];
-		int count = 0;
-		for(float i = startAngle; i < FULL_CIRC + startAngle; i+= skipDegree)
-		{
-			double x =  center.getFloatX() + Math.cos(Math.toRadians(i))*RADIUS;
-			double y = center.getFloatY() + Math.sin(Math.toRadians(i))*RADIUS;
-			Point p = new Point((float)x, (float)y);
-			points[count] = p;
-			count ++;
-		}
-		return new Polygon(center, points);
-	}
-
-	public static Polygon getDistortedShape(int numPoints, Point center, float radius, float startAngle)
-	{
-		final float FULL_CIRC = 360f;
-		float RADIUS = radius - 0.1f;
-		float skipDegree = FULL_CIRC / numPoints;
-		Point[] points = new Point[numPoints];
-		int count = 0;
-		float offset = 0.0f;
-		for(float i = startAngle; i < FULL_CIRC + startAngle; i+= skipDegree)
-		{
-			double x =  center.getFloatX() + offset + Math.cos(Math.toRadians(i))*RADIUS;
-			double y = center.getFloatY() + offset +  Math.sin(Math.toRadians(i))*RADIUS;
-			Point p = new Point((float)x, (float)y);
-			points[count] = p;
-			switch(count)
-			{
-				case 1:
-					RADIUS += 0.1f;
-					offset = 0.04f;
-					break;
-				case 6:
-					RADIUS += 0.04f;
-					break;
-				case 8:
-					RADIUS -= 0.14f;
-					break;
-			}
-			count ++;
-		}
-		return new Polygon(center, points);
 	}
 }
 

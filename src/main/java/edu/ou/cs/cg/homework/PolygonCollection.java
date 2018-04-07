@@ -5,7 +5,7 @@ import java.util.ArrayList;
 class PolygonCollection
 {
     private ArrayList<Polygon> polygons;
-    private int focused = 1;
+    private int focused = 0;
 
     public PolygonCollection()
     {

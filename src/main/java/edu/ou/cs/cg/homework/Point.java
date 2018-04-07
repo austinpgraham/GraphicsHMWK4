@@ -52,6 +52,11 @@ public class Point extends Point2D.Float
         this.velocity = v;
     }
 
+    public Vector getVelocity()
+    {
+        return this.velocity;
+    }
+
     public void reset(Point p)
     {
         this.x = p.getFloatX();
