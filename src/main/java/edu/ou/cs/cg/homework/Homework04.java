@@ -82,14 +82,14 @@ public final class Homework04
 		canvas.addGLEventListener(root);
 
 		float radius =1.0f;
-		float pointerRadius = 0.08f;
+		float pointerRadius = 0.04f;
 
 		collection = new PolygonCollection();
 		bouncers = new PolygonCollection();
 		bouncers.addPolygon(new Polygon(new Point(0.0f, 0.0f), pointerRadius));
 		bouncers.addPolygon(new Polygon(4, new Point(0.0f, 0.0f), pointerRadius, 45f));
 		bouncers.addPolygon(new Polygon(8, new Point(0.0f, 0.0f), pointerRadius, 0f));
-		bouncers.addPolygon(new Polygon(5, new Point(0.0f, 0.0f), pointerRadius, 0f));
+		bouncers.addPolygon(new DistortedPointerPolygon(5, new Point(0.0f, 0.0f), pointerRadius, 90f));
 		collection.addPolygon(new Polygon(4, new Point(0.0f, 0.0f), radius + 0.3f, 45f));
 		collection.addPolygon(new Polygon(6, new Point(0.0f,0.0f), radius, 0f));
 		collection.addPolygon(new Polygon(32, new Point(0.0f, 0.0f), radius, 0f));
