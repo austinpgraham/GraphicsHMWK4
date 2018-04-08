@@ -1,20 +1,44 @@
+/**
+ * Author: Austin Graham
+ */
 package edu.ou.cs.cg.homework;
 
 import java.util.ArrayList;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
+/**
+ * Implementation of the key listener
+ * for the canvas object
+ */
 class EventKeyListener implements KeyListener {
 
+    // List of container polygons
     PolygonCollection polygons;
+
+    // List of collections of pointers
     ArrayList<PolygonCollection> bouncers;
 
+    /**
+     * Construct the listener
+     *
+     * @param collection: container collection
+     * @param bouncers: collection of pointers
+     */
     public EventKeyListener(PolygonCollection collection, ArrayList<PolygonCollection> bouncers)
     {
         this.polygons = collection;
         this.bouncers = bouncers;
     }
 
+    /**
+     * Fires when a key on the keyboard is released.
+     * If arrow keys are pressed, adjust area/velocity
+     * appropriately. 1-4 changes conatiners, and 6-9 changes
+     * all pointers keeping state from original pointer
+     *
+     * @param e: Key event causing the method to run
+     */
     public void keyReleased(KeyEvent e)
     {
         for(PolygonCollection pc: this.bouncers)

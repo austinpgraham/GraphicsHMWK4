@@ -24,6 +24,9 @@ public class Utils
 		gl.glEnd();
 	}
 
+	/**
+	 * Draw a single point
+	 */
 	public static void drawPoint(GL2 gl, Point p, float[] color)
 	{
 		gl.glBegin(GL.GL_POINTS);
