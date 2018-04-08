@@ -8,8 +8,32 @@
 // 201802408 [graham]:	Original file.
 //
 //******************************************************************************
-// Notes:
+// Notes: 
 //
+// Part 1: Self explanatory: this runs
+//
+// Part 2: Each point has an associated velocity vector that at each update step
+// alters the position of the point. If the point position plus where the vector
+// leads it intersects with a side of the polygon, the reflection is calculated
+// using the known equation in the slides
+//
+// Part 3: The key listener allows the container to change. The collision is 
+// is calculated by iterating through vector sides of the polygon thus there
+// was little change to the reflection calculation
+//
+// Part 4: Instead of a single collision vector, I iterate 
+// through all vectors of the pointer polygon and the container polygon to 
+// find if any of the vectors intersect. If any found, the reflection is calulated.
+// All points in the pointer polygons are given the same velocity as the center.
+//
+// Part 5: A mouse listener was implemented that translates pixel coordinates
+// to GL coordinates, placing a new pointer polygon at that position. These new 
+// pointers are kept in a collection so when a shape is changed or 
+// velocity is changed, it is changed for all pointers.
+//
+// BOUNS: When anything is changed (container/pointer/velocities) the state is kept
+// By copying state from polygon to polygon on state change.
+// At no point will any of the pointers respawn in the middle of the container.
 //******************************************************************************
 
 package edu.ou.cs.cg.homework;
