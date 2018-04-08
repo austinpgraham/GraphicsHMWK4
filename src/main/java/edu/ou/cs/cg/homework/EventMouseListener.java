@@ -1,13 +1,25 @@
+/**
+ * Author: Austin Graham
+ */
 package edu.ou.cs.cg.homework;
 
 import java.util.ArrayList;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 
+/**
+ * Implements a mouse listener to spawn new polygons
+ */
 class EventMouseListener implements MouseListener
 {
+    // Polygon collections of pointers
     private ArrayList<PolygonCollection> cols;
 
+    /**
+     * Create listener
+     *
+     * @param c: The list of pointers
+     */
     public EventMouseListener(ArrayList<PolygonCollection> c)
     {
         this.cols = c;

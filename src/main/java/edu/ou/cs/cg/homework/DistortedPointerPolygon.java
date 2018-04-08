@@ -1,12 +1,24 @@
+/**
+ * Author: Austin Graham
+ */
 package edu.ou.cs.cg.homework;
 
+/**
+ * Draws a distorted pointer polygon
+ */
 class DistortedPointerPolygon extends Polygon
 {
+    /**
+     * Constructs a polygon
+     */
     public DistortedPointerPolygon(int numPoints, Point center, float radius, float startAngle)
     {
         super(numPoints, center, radius, startAngle);
     }
 
+    /**
+     * Generate points altering them in special cases
+     */
     @Override
     protected Point[] generatePoints(int numPoints, Point center, float radius, float startAngle)
     {

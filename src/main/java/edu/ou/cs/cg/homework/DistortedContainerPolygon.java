@@ -1,12 +1,26 @@
+/**
+ * Author: Austin Graham
+ */
 package edu.ou.cs.cg.homework;
 
+/**
+ * Calculates a distorted polygon
+ */
 class DistortedContainerPolygon extends Polygon
 {
+    /**
+     * Creates a polygon,
+     * with overloaded generate points 
+     * to alter the sides
+     */
     public DistortedContainerPolygon(int numPoints, Point center, float radius, float startAngle)
     {
         super(numPoints, center, radius, startAngle);
     }
 
+    /**
+     * Generate points altering them in special cases
+     */
     @Override
     protected Point[] generatePoints(int numPoints, Point center, float radius, float startAngle)
     {
