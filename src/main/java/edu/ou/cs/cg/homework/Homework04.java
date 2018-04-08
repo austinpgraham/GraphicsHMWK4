@@ -1,11 +1,11 @@
 //******************************************************************************
 // Copyright (C) 2016 University of Oklahoma Board of Trustees.
 //******************************************************************************
-// Last modified: Tue Feb  9 20:33:16 2016 by Chris Weaver
+// Last modified: Sun Apr  8 12:09:16 2016 by Austin Graham
 //******************************************************************************
 // Major Modification History:
 //
-// 20160209 [weaver]:	Original file.
+// 201802408 [graham]:	Original file.
 //
 //******************************************************************************
 // Notes:
@@ -29,9 +29,9 @@ import com.jogamp.opengl.util.gl2.GLUT;
 //******************************************************************************
 
 /**
- * The <CODE>Homework02</CODE> class.<P>
+ * The <CODE>Homework04</CODE> class.<P>
  *
- * @author  Chris Weaver
+ * @author  Austin Graham
  * @version %I%, %G%
  */
 public final class Homework04
@@ -54,9 +54,13 @@ public final class Homework04
 	public int				h;			// Canvas height
 	private TextRenderer	renderer;
 
+	// Collection of possible polygon containers
 	static PolygonCollection collection;
+
+	// Initial collection of pointer polygons
 	static PolygonCollection bouncers;
 
+	// List of all pointer polygons
 	static ArrayList<PolygonCollection> pointers;
 
 	//**********************************************************************
@@ -65,6 +69,7 @@ public final class Homework04
 
 	public static void main(String[] args)
 	{
+		/* Initialize GL */
 		GLProfile		profile = GLProfile.getDefault();
 		GLCapabilities	capabilities = new GLCapabilities(profile);
 		GLCanvas		canvas = new GLCanvas(capabilities);
@@ -84,9 +89,14 @@ public final class Homework04
 		Homework04 root = new Homework04();
 		canvas.addGLEventListener(root);
 
+		// Radius of containers
 		float radius =1.0f;
+
+		// Initial radius of pointers
 		float pointerRadius = 0.04f;
 
+		// Create the initial set of pointer polygons
+		// and container polygons
 		collection = new PolygonCollection();
 		bouncers = new PolygonCollection();
 		bouncers.addPolygon(new Polygon(new Point(0.0f, 0.0f), pointerRadius));
@@ -98,17 +108,20 @@ public final class Homework04
 		collection.addPolygon(new Polygon(32, new Point(0.0f, 0.0f), radius, 0f));
 		collection.addPolygon(new DistortedContainerPolygon(10, new Point(0.0f, 0.0f), radius - 0.1f, 54f));
 
+		// Add the initial pointer set
 		pointers = new ArrayList<PolygonCollection>();
 		pointers.add(bouncers);
 
+		// Add key listener
 		EventKeyListener keyList = new EventKeyListener(collection, pointers);
 		canvas.addKeyListener(keyList);
 
+		// Add mouse listener
 		EventMouseListener mouseList = new EventMouseListener(pointers);
 		canvas.addMouseListener(mouseList);
 
+		// Start animator
 		FPSAnimator		animator = new FPSAnimator(canvas, 60);
-
 		animator.start();
 	}
 
@@ -118,9 +131,11 @@ public final class Homework04
 
 	public void		init(GLAutoDrawable drawable)
 	{
+		// Get width and height
 		w = drawable.getWidth();
 		h = drawable.getHeight();
 		
+		// Unused text renderer
 		renderer = new TextRenderer(new Font("Serif", Font.PLAIN, 18),
 									true, true);
 	}
@@ -148,12 +163,18 @@ public final class Homework04
 
 	private void	update()
 	{
+		// For every pointer polygon collection
 		for(PolygonCollection pc: pointers)
 		{
+			// Grab the drawn polygon and update new
+			// coordinates
 			Polygon pointer = pc.getFocusedPolygon();
 			pointer.update();
+			// Detect possible collisions
 			Vector col_vec = collection.getFocusedPolygon().collision(pointer);
 			Vector vel_vec = pointer.center.getPointVector();
+			// If collision vector found, calculate the 
+			// reflected velocity and set for that pointer
 			if(col_vec != null)
 			{
 				Vector normal = col_vec.getNormal();
@@ -168,10 +189,15 @@ public final class Homework04
 		GL2		gl = drawable.getGL().getGL2();
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+
+		// Draw the focused polygon for every 
+		// polygon collection
 		for(PolygonCollection pc: pointers)
 		{
 			pc.getFocusedPolygon().draw(gl);
 		}
+
+		// Draw the chosen container
 		collection.getFocusedPolygon().draw(gl);
 	}
 }
